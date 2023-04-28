@@ -16,10 +16,18 @@ int main(void)
     printf("%d\n", len);
     len = printf("%c\n", 'A');
     printf("%d\n", len);
-    len = _printf("%%\n");
-    printf("%d\n", len);
-    len = printf("%%\n");
-    printf("%d\n", len);
+    len = _printf("%");
+    printf("\n%d\n", len);
+    len = printf("%");
+    printf("\n%d\n", len);
+    len = _printf("%d", 1024);
+    printf("\n%d\n", len);
+    len = printf("%d", 1024);
+    printf("\n%d\n", len);
+    len = _printf("%d", INT_MIN);
+    printf("\n%d\n", len);
+    len = printf("%d", INT_MIN);
+    printf("\n%d\n", len);
 
 
     return (0);

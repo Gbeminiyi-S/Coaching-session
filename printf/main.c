@@ -8,10 +8,12 @@ int _printf(const char *format, ...)
 		{'c', print_char},
 		{'s', print_str},
 		{'%', print_mod},
+		{'d', print_int},
+		{'i', print_int},
 	};
 
-	/* check if format is valid*/
-	if (format == NULL)
+	/* check if format is valid and format != "%"*/
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
 
 	/* starts the printing process*/
