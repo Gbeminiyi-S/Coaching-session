@@ -10,6 +10,7 @@ int _printf(const char *format, ...)
 		{'%', print_mod},
 		{'d', print_int},
 		{'i', print_int},
+		{'b', print_binary},
 	};
 
 	/* check if format is valid and format != "%"*/

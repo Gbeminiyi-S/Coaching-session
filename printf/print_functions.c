@@ -39,6 +39,11 @@ int print_int(va_list arg)
 		digits *= -1;
 		len++;
 	}
+	else if (number == 0)
+	{
+		putchar('0');
+		return (1);
+	}
 	len += int_helper(digits);
 	return (len);
 }
@@ -52,6 +57,32 @@ int int_helper(unsigned int value)
         return (0);
     }
     len = (1 + int_helper(value / 10));
-    putchar(value % 10 + '0');
+    putchar(value % 2 + '0');
+    return (len);
+}
+
+int print_binary(va_list arg)
+{
+    long int number = va_arg(arg, long int);
+    
+    if (number == 0)
+    {
+        putchar('0');
+        return (1);
+    }
+    else if (number > 0)
+    	return (binary_helper(number));
+    else
+	return (0);
+}
+
+int binary_helper(long int value)
+{
+    int len = 0;
+
+    if (value == 0)
+        return (0);
+    len = (1 + binary_helper(value / 2));
+    putchar((value % 2) + '0');
     return (len);
 }
