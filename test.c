@@ -20,15 +20,14 @@ int main(void)
     printf("\n%d\n", len);
     len = printf("%");
     printf("\n%d\n", len);
-    len = _printf("%d", 1024);
+    len = _printf("%d", -1024);
     printf("\n%d\n", len);
-    len = printf("%d", 1024);
+    len = printf("%d", -1024);
     printf("\n%d\n", len);
     len = _printf("%d", INT_MIN);
     printf("\n%d\n", len);
     len = printf("%d", INT_MIN);
     printf("\n%d\n", len);
-
 
     return (0);
 }
