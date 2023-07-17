@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+extern char **environ;
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        printf("Usage: %s <filename>\n", argv[0]);
+        return 1;
+    }
+
+    char *filename = argv[1];
+    char **env_var = environ;
+    char *env_path = NULL;
+    size_t max_path_length = 256;
+
+    // Find the PATH value in environ
+    while (*env_var != NULL) {
+        if (strncmp(*env_var, "PATH=", 5) == 0) {
+            env_path = *env_var + 5;  // Skip "PATH=" prefix
+            break;
+        }
+        env_var++;
+    }
+
+    if (env_path == NULL) {
+        printf("PATH environment variable not found.\n");
+        return 1;
+    }
+
+    char *filepath = (char *)malloc(max_path_length * sizeof(char));
+    if (filepath == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+
+    char *path = strtok(env_path, ":");
+    while (path != NULL) {
+        size_t path_length = strlen(path) + 1;  // Add 1 for the path separator '/'
+        strncpy(filepath, path, max_path_length);
+
+        // Concatenate the path separator and the filename
+        strncat(filepath, "/", max_path_length - path_length);
+        strncat(filepath, filename, max_path_length - path_length - 1);
+
+        if (access(filepath, F_OK) == 0) {
+            printf("File '%s' found.\n", filepath);
+            free(filepath);
+            return 0;  // Exit after finding the file
+        }
+
+        path = strtok(NULL, ":");
+    }
+
+    printf("File '%s' not found.\n", filename);
+    free(filepath);
+    return 0;
+}
+
